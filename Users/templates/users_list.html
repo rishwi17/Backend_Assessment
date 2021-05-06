@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+</head>
+<body>
+
+    {% if user.is_authenticated %}
+
+        <h1>You are logged in as {{ user.username }}</h1>
+        {% if user.is_superuser %}
+
+            <h3>You are an Admin </h3>
+
+        {% else %}
+        <h3>
+            You are not an admin
+        </h3>
+
+        {% endif %}
+    {% endif %}
+
+    <h3></h3>
+    <h1><h1>
+    <br>
+    <table border="solid 4px">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        {% for user in object_list %}
+            <tr>
+                <td> {{ user.username }} </th>
+                <td> {{ user.email }} </th>
+                <td> <a href = "{% url 'edit' user.id %}"> Click To Edit </a> </th>
+                <td> <a href = "{% url 'delete' user.id %}" > Click To Delete </a> </th>
+            </tr>
+        {% endfor %}
+
+    </table>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}" >LOGOUT</a>
+    <a href="{% url 'signup' %}" >NEW USER</a>
+    {% endif %}
+    {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}" >LOGIN</a>
+    {% endif %}
+
+
+</body>
+</html>
